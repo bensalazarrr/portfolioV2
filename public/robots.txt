@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO(deploy): update to the V2 production URL.
+Sitemap: https://portfolio-v2.example.com/sitemap-index.xml

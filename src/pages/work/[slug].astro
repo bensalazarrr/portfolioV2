@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('work');
+  const sorted = projects
+    .filter((entry) => !entry.data.draft)
+    .sort((a, b) => a.data.order - b.data.order);
+
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: sorted[i - 1] ?? null,
+      next: sorted[i + 1] ?? null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const sections = headings.filter((h) => h.depth === 2);
+
+const kindLabel: Record<string, string> = {
+  web: 'Web',
+  mobile: 'Mobile',
+  systems: 'Systems',
+  concept: 'Concept',
+};
+
+const accent: Record<string, string> = {
+  web: 'var(--color-pink)',
+  mobile: 'var(--color-green)',
+  systems: 'var(--color-blue)',
+  concept: 'var(--color-lav)',
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title} — John Benedict Salazar`}
+  description={entry.data.summary}
+>
+  <article class="case">
+    <div class="case-top">
+      <a class="work-link" href="/#work"><span aria-hidden="true">←</span> All work</a>
+      <span class="chip">{kindLabel[entry.data.discipline]}</span>
+      <span class="chip">{entry.data.year}</span>
+    </div>
+
+    <div class="case-head">
+      <div>
+        <h1 class="case-title">{entry.data.title}</h1>
+        <p class="case-lede">{entry.data.summary}</p>
+      </div>
+
+      <aside class="fact-list" aria-label="Project details">
+        {entry.data.specs.map((spec) => (
+          <div class="fact">
+            <span>{spec.label}</span>
+            <span>{spec.value}</span>
+          </div>
+        ))}
+      </aside>
+    </div>
+
+    <figure
+      class:list={['case-img', entry.data.frame === 'portrait' && 'case-img--portrait']}
+      style={`--accent: ${accent[entry.data.discipline]}`}
+    >
+      <img
+        src={entry.data.image}
+        alt={entry.data.imageAlt}
+        width="1280"
+        height="800"
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
+
+    <div class="case-body">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <aside class="case-side">
+        {sections.length > 1 && (
+          <div class="case-block">
+            <p class="label" style="margin-bottom: 12px;">On this page</p>
+            <nav class="case-toc" aria-label="Sections">
+              {sections.map((section) => (
+                <a href={`#${section.slug}`}>{section.text}</a>
+              ))}
+            </nav>
+          </div>
+        )}
+
+        {entry.data.stack.length > 0 && (
+          <div class="case-block">
+            <p class="label" style="margin-bottom: 12px;">Stack</p>
+            <div class="tags">
+              {entry.data.stack.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+          </div>
+        )}
+
+        {(entry.data.live || entry.data.repo) && (
+          <div class="case-block">
+            <p class="label" style="margin-bottom: 12px;">Links</p>
+            <div class="case-links">
+              {entry.data.live && (
+                <a class="btn btn--sm btn--yellow" href={entry.data.live} target="_blank" rel="noopener">
+                  Visit live <span aria-hidden="true">↗</span>
+                </a>
+              )}
+              {entry.data.repo && (
+                <a class="btn btn--sm btn--white" href={entry.data.repo} target="_blank" rel="noopener">
+                  Repository <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    <nav class="case-nav" aria-label="Project navigation">
+      {prev ? (
+        <a class="work-link" href={`/work/${prev.id}/`}>
+          <span aria-hidden="true">←</span> {prev.data.title}
+        </a>
+      ) : (
+        <span></span>
+      )}
+      {next ? (
+        <a class="work-link" href={`/work/${next.id}/`}>
+          {next.data.title} <span aria-hidden="true">→</span>
+        </a>
+      ) : (
+        <span></span>
+      )}
+    </nav>
+  </article>
+</BaseLayout>

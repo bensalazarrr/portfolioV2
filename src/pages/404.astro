@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found — John Benedict Salazar" noindex>
+  <section class="notfound" aria-labelledby="nf-title">
+    <span class="sticker">Error 404</span>
+    <h1 class="display" id="nf-title" style="margin-top: 24px;">
+      Nothing<br />on this page.
+    </h1>
+    <p class="case-lede" style="margin-top: 20px;">
+      The page you asked for is not part of this set. It may have moved, or it may
+      never have existed.
+    </p>
+    <div class="intro-actions">
+      <a class="btn btn--pink" href="/"><span aria-hidden="true">←</span> Back to the cover</a>
+      <a class="btn btn--yellow" href="/#work">See the work</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    margin-top: 40px;
+    padding: 48px 34px;
+    background: var(--color-paper);
+    border: var(--bd);
+    border-radius: 28px;
+    box-shadow: var(--sh);
+    max-width: 720px;
+  }
+
+  @media (min-width: 720px) {
+    .notfound {
+      padding: 64px 56px;
+    }
+  }
+</style>

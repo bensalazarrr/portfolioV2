@@ -1,0 +1,330 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('work'))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const kindLabel: Record<string, string> = {
+  web: 'Web',
+  mobile: 'Mobile',
+  systems: 'Systems',
+  concept: 'Concept',
+};
+
+const accent: Record<string, string> = {
+  web: 'var(--color-pink)',
+  mobile: 'var(--color-green)',
+  systems: 'var(--color-blue)',
+  concept: 'var(--color-lav)',
+};
+
+const layers = [
+  { id: '01', name: 'Interface', color: 'var(--color-pink)', items: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Astro', 'Tailwind CSS'] },
+  { id: '02', name: 'Mobile', color: 'var(--color-green)', items: ['React Native', 'Expo', 'Expo Router'] },
+  { id: '03', name: 'Runtime', color: 'var(--color-yellow)', items: ['Node.js', 'Python'] },
+  { id: '04', name: 'Data', color: 'var(--color-blue)', items: ['PostgreSQL', 'Supabase', 'Firebase', 'Prisma', 'MariaDB', 'SQL'] },
+  { id: '05', name: 'Network', color: 'var(--color-lav)', items: ['TCP/IP', 'DNS', 'HTTP / TLS', 'Subnetting', 'Routing', 'Port forwarding', 'Cisco Packet Tracer'] },
+  { id: '06', name: 'Hardware', color: 'var(--color-cream-2)', items: ['Assembly', 'Diagnostics', 'OS installation', 'Printer setup', 'Microsoft Office'] },
+];
+
+const journey = [
+  {
+    year: '2024 — now',
+    title: 'BS Information Technology',
+    org: 'Our Lady of Lourdes College',
+    kind: 'Education',
+    body: 'Fourth year. Coursework in system design, networking, and application development, alongside the projects on this page.',
+    current: true,
+  },
+  {
+    year: '2024',
+    title: 'Computer Systems Servicing NC II',
+    org: 'TESDA',
+    kind: 'Certification',
+    body: 'Hardware servicing, installation, and troubleshooting — the part of the work that happens before anything renders.',
+    current: false,
+  },
+  {
+    year: '2023 — 2024',
+    title: 'BS Electrical Engineering',
+    org: 'Pamantasan ng Lungsod ng Valenzuela',
+    kind: 'Education',
+    body: 'One year before shifting to information technology.',
+    current: false,
+  },
+  {
+    year: '2021 — 2023',
+    title: 'Information and Communication Technology',
+    org: 'Sitero Francisco Memorial National High School',
+    kind: 'Education',
+    body: 'Where the networking and hardware foundation started, before the web work did.',
+    current: false,
+  },
+];
+---
+
+<BaseLayout
+  title="John Benedict Salazar — Web & Mobile Developer"
+  description="Portfolio of John Benedict Salazar, a web and mobile developer in Valenzuela City with a foundation in networking and computer hardware."
+>
+  <!-- BENTO -->
+  <section class="bento" aria-labelledby="hero-title">
+    <article class="card b-intro reveal">
+      <div class="intro-top">
+        <span class="label"><span class="dot" aria-hidden="true"></span> Valenzuela City, PH</span>
+        <span class="chip">4th year BSIT</span>
+      </div>
+
+      <h1 class="display" id="hero-title">
+        Hey, I'm Benedict!
+      </h1>
+
+      <p style="margin-top: 20px; font-size: 1.06rem; line-height: 1.6;">
+        I build practical web and mobile experiences, with a foundation in
+        networking and computer hardware. Currently working mainly in React,
+        Next.js, and Expo.
+      </p>
+
+      <div class="intro-actions">
+        <a class="btn btn--pink" href="#work">View my work</a>
+        <a class="btn btn--yellow" href="#contact">Let's talk</a>
+      </div>
+
+      <div class="intro-foot">
+        <span class="tag">React</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">Expo</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Supabase</span>
+      </div>
+    </article>
+
+    <article class="card b-portrait reveal">
+      <div class="portrait-ring">
+        <img
+          src="/assets/benedict.webp"
+          alt="Portrait of John Benedict Salazar"
+          width="467"
+          height="759"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+      <div style="text-align: center; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+        <p class="portrait-name">John Benedict<br />Salazar</p>
+        <span class="portrait-role">Web &amp; Mobile Developer</span>
+        <span class="sticker" style="margin-top: 6px;">Developer!</span>
+      </div>
+    </article>
+
+    <article class="card card--blue b-building reveal">
+      <span class="label">Currently building</span>
+      <p style="font-weight: 800; font-size: 1.02rem; line-height: 1.4; max-width: 24ch; margin: 0;">
+        Orbit — a personal workspace for the job hunt, from applications to invoices.
+      </p>
+      <a class="work-link" href="/work/orbit/">See the case study <span aria-hidden="true">→</span></a>
+    </article>
+
+    <article class="card card--yellow b-specialty reveal">
+      <span class="label">Specialty</span>
+      <div>
+        <h2 class="h3" style="font-size: 1.32rem; margin-bottom: 6px;">Web &amp; mobile interfaces</h2>
+        <p class="card-note" style="margin: 0; opacity: 0.86;">React · Next.js · Expo · Supabase</p>
+      </div>
+      <a class="work-link" href="#capability">See the stack <span aria-hidden="true">→</span></a>
+    </article>
+
+    <article class="card b-stat reveal">
+      <span class="label">Projects</span>
+      <div>
+        <p class="stat-number">09</p>
+        <p class="card-note" style="margin: 6px 0 0; opacity: 0.86;">
+          Web, mobile, and systems — each with a case study.
+        </p>
+      </div>
+    </article>
+
+    <article class="card b-quote reveal">
+      <span class="label">Approach</span>
+      <p class="big-quote" style="margin: 0;">
+        Practical web experiences. Thoughtfully built.
+      </p>
+      <span class="chip" style="align-self: flex-start;">Design · Build · Test</span>
+    </article>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Selected work</span>
+        <h2 class="h2" id="work-title" style="margin-top: 12px;">Nine things I've built</h2>
+      </div>
+      <p>
+        Live projects, shipped apps, and concept builds. Filter by type, then open
+        any card for the details.
+      </p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter work by type">
+      <button class="filter" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter" data-filter="web" aria-pressed="false">Web</button>
+      <button class="filter" data-filter="mobile" aria-pressed="false">Mobile</button>
+      <button class="filter" data-filter="systems" aria-pressed="false">Systems</button>
+      <button class="filter" data-filter="concept" aria-pressed="false">Concept</button>
+    </div>
+
+    <div class="work-grid">
+      {projects.map((project) => (
+        <article
+          class="work-card"
+          data-discipline={project.data.discipline}
+          style={`--accent: ${accent[project.data.discipline]}`}
+        >
+          <div class="work-media">
+            <img
+              src={project.data.image}
+              alt={project.data.imageAlt}
+              width="1280"
+              height="800"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="work-body">
+            <div class="work-top">
+              <span class="chip">{kindLabel[project.data.discipline]}</span>
+              <span class="work-year">{project.data.year}</span>
+            </div>
+
+            <h3 class="h3">
+              <a href={`/work/${project.id}/`}>{project.data.title}</a>
+            </h3>
+
+            <p class="work-sum">{project.data.summary}</p>
+
+            {project.data.stack.length > 0 && (
+              <div class="tags">
+                {project.data.stack.map((tag) => <span class="tag">{tag}</span>)}
+              </div>
+            )}
+
+            <a class="work-link" href={`/work/${project.id}/`}>
+              Case study <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- CAPABILITY -->
+  <section class="section" id="capability" aria-labelledby="cap-title">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Capability</span>
+        <h2 class="h2" id="cap-title" style="margin-top: 12px;">What I work with</h2>
+      </div>
+      <p>
+        Six layers, top to bottom — from what a person touches down to the metal.
+        A tool is listed here because it shipped in something above.
+      </p>
+    </div>
+
+    <div class="cap-grid">
+      {layers.map((layer) => (
+        <article class="cap-card" style={`background: ${layer.color};`}>
+          <span class="cap-num">{layer.id}</span>
+          <h3 class="h3" style="font-size: 1.12rem;">{layer.name}</h3>
+          <div class="cap-items">
+            {layer.items.map((item) => <span class="chip">{item}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section class="section" id="journey" aria-labelledby="journey-title">
+    <div class="section-head">
+      <div>
+        <span class="section-tag">Journey</span>
+        <h2 class="h2" id="journey-title" style="margin-top: 12px;">Where it started</h2>
+      </div>
+      <p>School, certification, and the long way round to software.</p>
+    </div>
+
+    <div class="journey">
+      {journey.map((item) => (
+        <article class="journey-item">
+          <span class="journey-year">{item.year}</span>
+          <div>
+            <h3 class="h3" style="font-size: 1.14rem;">{item.title}</h3>
+            <p class="journey-meta">
+              <span>{item.org}</span>
+              <span class="journey-kind">{item.kind}</span>
+              {item.current && <span class="now">Current</span>}
+            </p>
+            <p>{item.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="contact-card">
+      <div>
+        <span class="label" style="margin-bottom: 14px;">Contact</span>
+        <h2 class="h2" id="contact-title" style="max-width: 15ch; margin-bottom: 16px;">
+          Tell me what needs building.
+        </h2>
+        <p style="max-width: 40ch; font-weight: 500;">
+          Email is the fastest route. For commissioned work, include the scope and a
+          rough timeline. For a role, include the team and the stack you run.
+        </p>
+        <div style="margin-top: 24px;">
+          <a class="mail" href="mailto:benedictsalazar64@gmail.com">benedictsalazar64@gmail.com</a>
+        </div>
+        <div class="socials">
+          <a href="https://github.com/bensalazarrr" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/john-benedict-salazar-45379b444/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://www.facebook.com/szzzz.beneddd/" target="_blank" rel="noopener">Facebook ↗</a>
+          <a href="https://www.instagram.com/benneverbeena.10/" target="_blank" rel="noopener">Instagram ↗</a>
+        </div>
+      </div>
+
+      <aside>
+        <div class="fact-list">
+          <div class="fact"><span>Based</span><span>Valenzuela City</span></div>
+          <div class="fact"><span>Phone</span><span>0963 652 7633</span></div>
+          <div class="fact"><span>Reply</span><span>Within 1–2 days</span></div>
+          <div class="fact"><span>Open to</span><span>Web · Mobile</span></div>
+        </div>
+        <p class="card-note" style="margin-top: 16px; opacity: 0.86;">
+          Currently a fourth-year BSIT student at Our Lady of Lourdes College.
+        </p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-discipline]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+      cards.forEach((card) => {
+        const show = filter === 'all' || card.dataset.discipline === filter;
+        card.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+</script>
