@@ -605,19 +605,14 @@ a {
 }
 
 .section-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 22px;
-  flex-wrap: wrap;
   margin-bottom: 26px;
 }
 
 .section-head p {
-  max-width: 44ch;
+  max-width: 56ch;
   font-size: 0.95rem;
   color: var(--color-ink-soft);
-  margin: 0;
+  margin: 14px 0 0;
 }
 
 .section-tag {

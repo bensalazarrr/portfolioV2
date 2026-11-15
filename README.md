@@ -83,8 +83,17 @@ are capped at 360px wide).
 ## Deploy
 
 Static output. On Vercel: framework preset **Astro**, build `npm run build`,
-output `dist`. Update `site` in `astro.config.mjs` and the `site` constant in
-`BaseLayout.astro` when the domain changes.
+output `dist`.
+
+**Before going live**, set the V2 production URL in three places — it ships as
+the reserved placeholder `https://portfolio-v2.example.com` so it can never
+accidentally claim the V1 site's address:
+
+1. `site` in `astro.config.mjs`
+2. the `site` constant in `src/layouts/BaseLayout.astro`
+3. the `Sitemap:` line in `public/robots.txt`
+
+Each one is marked with a `TODO(deploy)` comment.
 
 ## Notes
 
